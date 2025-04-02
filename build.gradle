@@ -1,0 +1,50 @@
+plugins {
+    id 'java-library'
+    id "io.qameta.allure" version "2.12.0"
+    id 'io.qameta.allure-adapter' version '2.12.0'
+}
+
+group 'github.com.kadehar'
+version '1.0'
+
+def junitVersion = '5.11.4'
+def fakerVersion = '1.0.2'
+def ownerVersion = '1.0.12'
+def selenideVersion = '7.7.3'
+def allureVersion = '2.29.0'
+
+repositories {
+    mavenCentral()
+}
+
+allure {
+    version.set("$allureVersion")
+    adapter {
+        aspectjWeaver.set(true)
+        aspectjVersion.set("1.9.23")
+    }
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    testImplementation (
+            "org.junit.jupiter:junit-jupiter:$junitVersion",
+            "com.github.javafaker:javafaker:$fakerVersion",
+            "org.aeonbits.owner:owner:$ownerVersion",
+            "com.codeborne:selenide:$selenideVersion",
+    )
+    testImplementation("io.qameta.allure:allure-selenide:$allureVersion") {
+        exclude group: 'com.codeborne'
+    }
+    testImplementation("io.qameta.allure:allure-junit5:${allureVersion}") {
+        exclude group: "org.junit.jupiter"
+    }
+}
+
+tasks.test {
+    useJUnitPlatform()
+    systemProperties(System.getProperties())
+}
