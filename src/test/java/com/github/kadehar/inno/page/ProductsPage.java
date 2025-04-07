@@ -13,8 +13,12 @@ public class ProductsPage {
     private final ElementsCollection pricebars = inventoryList.$$(".pricebar");
     private final SelenideElement cart = $(".shopping_cart_link");
 
-    public ProductsPage() {
+    private ProductsPage() {
         new Title().assertIsVisible();
+    }
+
+    public static ProductsPage productsPage() {
+        return new ProductsPage();
     }
 
     @Step("Add {count} product(-s) to cart")
@@ -30,8 +34,12 @@ public class ProductsPage {
     }
 
     @Step("Go to cart")
-    public CartPage goToCart() {
+    public void goToCart() {
         cart.shouldBe(Condition.visible).click();
-        return new CartPage();
+    }
+
+    @Step("Verify products list is displayed")
+    public void verifyProductsListIsDisplayed() {
+        inventoryList.shouldBe(Condition.visible);
     }
 }

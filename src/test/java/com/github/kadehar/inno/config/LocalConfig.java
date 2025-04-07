@@ -57,6 +57,11 @@ public enum LocalConfig implements Config {
     }
 
     @Override
+    public String lockedOutUser() {
+        return USERS_CONFIG.lockedOutUser();
+    }
+
+    @Override
     public String password() {
         return USERS_CONFIG.password();
     }

@@ -13,5 +13,6 @@ public interface Config {
     Boolean enableSteps();
     String standardUser();
     String glitchedUser();
+    String lockedOutUser();
     String password();
 }

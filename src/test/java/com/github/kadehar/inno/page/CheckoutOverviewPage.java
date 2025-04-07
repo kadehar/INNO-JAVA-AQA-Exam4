@@ -16,10 +16,14 @@ public class CheckoutOverviewPage {
     private final SelenideElement totalPrice = $("[data-test=total-label]");
     private final SelenideElement taxPrice = $("[data-test=tax-label]");
     private final SelenideElement subtotalPrice = $("[data-test=subtotal-label]");
+    private final SelenideElement finishBtn = $("#finish");
 
-
-    public CheckoutOverviewPage() {
+    private CheckoutOverviewPage() {
         new Title().assertIsVisible();
+    }
+
+    public static CheckoutOverviewPage checkoutOverviewPage() {
+        return new CheckoutOverviewPage();
     }
 
     public CheckoutOverviewPage verifyTotalPrice() {
@@ -42,5 +46,10 @@ public class CheckoutOverviewPage {
         String total = PriceUtil.getTotal(tax, subtotal);
         totalPrice.shouldBe(Condition.visible).shouldHave(Condition.text(total));
         return this;
+    }
+
+    @Step("Click \"Finish\" button")
+    public void clickFinish() {
+        finishBtn.shouldBe(Condition.visible).click();
     }
 }

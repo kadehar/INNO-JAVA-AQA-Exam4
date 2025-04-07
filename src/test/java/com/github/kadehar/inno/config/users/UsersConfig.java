@@ -14,6 +14,8 @@ public interface UsersConfig extends Config {
     String standardUser();
     @Key("glitch")
     String glitchedUser();
+    @Key("lockedOut")
+    String lockedOutUser();
     @Key("password")
     String password();
 }

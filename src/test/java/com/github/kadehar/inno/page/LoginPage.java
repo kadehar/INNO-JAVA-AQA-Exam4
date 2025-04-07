@@ -14,20 +14,26 @@ public class LoginPage {
     private final SelenideElement username = $("#user-name");
     private final SelenideElement password = $("#password");
     private final SelenideElement loginButton = $("#login-button");
+    private final SelenideElement error = $("h3[data-test=error]");
 
     private LoginPage() {}
 
     @Step("Open login page")
-    public static LoginPage goTo() {
+    public static LoginPage loginPage() {
         Selenide.open("");
         return new LoginPage();
     }
 
     @Step("Login as {user.login}")
-    public ProductsPage login(@Param(value = "user", mode = HIDDEN) User user) {
+    public LoginPage login(@Param(value = "user", mode = HIDDEN) User user) {
         username.shouldBe(Condition.visible).setValue(user.login());
         password.shouldBe(Condition.visible).setValue(user.password());
         loginButton.shouldBe(Condition.visible).click();
-        return new ProductsPage();
+        return this;
+    }
+
+    @Step("Verify error message is \"{errorMessage}\"")
+    public void verifyErrorMessageIs(String errorMessage) {
+        error.shouldBe(Condition.visible).should(Condition.text(errorMessage));
     }
 }

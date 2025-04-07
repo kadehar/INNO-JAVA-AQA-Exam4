@@ -15,8 +15,12 @@ public class CheckoutFormPage {
     private final SelenideElement continueButton = $("#continue");
 
 
-    public CheckoutFormPage() {
+    private CheckoutFormPage() {
         new Title().assertIsVisible();
+    }
+
+    public static CheckoutFormPage checkoutFormPage() {
+        return new CheckoutFormPage();
     }
 
     public CheckoutFormPage fillForm(String firstName, String lastName, String zipCode) {
@@ -45,8 +49,7 @@ public class CheckoutFormPage {
     }
 
     @Step("Click \"Continue\" button")
-    public CheckoutOverviewPage continueCheckout() {
+    public void continueCheckout() {
         continueButton.shouldBe(Condition.visible).click();
-        return new CheckoutOverviewPage();
     }
 }
